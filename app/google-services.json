@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "978061235255",
+    "project_id": "pccoe-e6eed",
+    "storage_bucket": "pccoe-e6eed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978061235255:android:605ce29873ce641de35bb2",
+        "android_client_info": {
+          "package_name": "com.example.evchargingfinal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxVs4B_BqC7WdZioyOeJr9w3wxMM4djgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978061235255:android:4292c6bb35912163e35bb2",
+        "android_client_info": {
+          "package_name": "com.pccoe.evcharging"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxVs4B_BqC7WdZioyOeJr9w3wxMM4djgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978061235255:android:8677d230ff256d89e35bb2",
+        "android_client_info": {
+          "package_name": "com.pccoe.evcharginguser"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDxVs4B_BqC7WdZioyOeJr9w3wxMM4djgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

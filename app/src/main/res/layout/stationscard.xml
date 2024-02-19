@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="5dp"
+
+    >
+    <LinearLayout
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/station_light_bg"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="15dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    >
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/avatar_img"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/station"
+                        app:shapeAppearanceOverlay="@style/ImageView.roundedRectangle"
+                        />
+
+                    <TextView
+                        android:id="@+id/station_name"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/avatar_img"
+                        android:text="Namo EV Station"
+                        android:paddingLeft="10dp"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="17dp"
+                        android:maxLines="1"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/distance"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/station_name"
+                        android:text="2KM away"
+                        android:layout_toRightOf="@id/avatar_img"
+                        android:paddingLeft="10dp"
+                        android:fontFamily="@font/poppins"
+                        android:textSize="12sp"
+                        android:textColor="@color/cl_faint_green"/>
+
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/gradient"
+                    android:text="Details"
+                    android:paddingHorizontal="10dp"
+                    android:textColor="@color/cl_black"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="15sp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="chip"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="0dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/chip"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/cl_black"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="available"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="0dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/chip"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/cl_black"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="fast charging"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="0dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/chip"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/cl_black"
+                    />
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

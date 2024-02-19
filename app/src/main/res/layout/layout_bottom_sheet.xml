@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/bottomsheetcontainer"
+    android:layout_height="580dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/layout_background"
+    android:layout_marginTop="50dp"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layout_background"
+            >
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="25dp"
+
+                android:background="@drawable/layout_background"
+                android:layout_margin="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@drawable/layout_background"
+                    >
+
+                    <!-- Media -->
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="194dp"
+                        android:scaleType="centerCrop"
+                        android:background="@drawable/layout_background"
+                        android:src="@drawable/ev_station"
+                        app:shapeAppearanceOverlay="@style/ImageView.SmallRound"
+                        android:contentDescription="Station is the"
+                        />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <!-- Title, secondary and supporting text -->
+                        <TextView
+                            android:id="@+id/stationname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:fontFamily="@font/poppins_medium"
+                            android:text="Namo EV"
+                            android:textSize="20sp"
+                            android:textAppearance="?attr/textAppearanceHeadline6"
+                            />
+
+                        <!--                        energy-->
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:textAllCaps="true"
+                            android:text="price (₹)"
+                            android:textColor="@color/cl_faint_green"
+                            android:textSize="8sp"
+                            android:singleLine="true"
+                            android:layout_marginTop="5dp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/cl_green"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:fontFamily="@font/poppins"
+                            android:text="1000.00"
+                            />
+
+
+                        <!--                        energy-->
+                        <TextView
+                            android:id="@+id/emailTextViewLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:textAllCaps="true"
+                            android:text="Remaining Energy (watts)"
+                            android:textColor="@color/cl_faint_green"
+                            android:textSize="8sp"
+                            android:singleLine="true"
+                            android:layout_marginTop="5dp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/remainingenergy"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:textSize="12sp"
+
+                            android:fontFamily="@font/poppins"
+                            android:text="360.00"
+                            />
+
+                        <!--                        address-->
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:textAllCaps="true"
+                            android:text="address of station"
+                            android:textColor="@color/cl_faint_green"
+                            android:textSize="8sp"
+                            android:singleLine="true"
+                            android:layout_marginTop="5dp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/secondary_white"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/poppins"
+                            android:maxLines="2"
+                            android:text="123 Main Street, Cityville, State, Country"
+                            />
+
+                        <TextView
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins"
+                            android:textAllCaps="true"
+                            android:text="features"
+                            android:textColor="@color/cl_faint_green"
+                            android:textSize="8sp"
+                            android:singleLine="true"
+                            android:layout_marginTop="5dp"
+                            android:textStyle="bold" />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:orientation="vertical">
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/outline_battery_charging_full"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/secondary_white"
+                                    android:textSize="12sp"
+                                    android:textAlignment="center"
+                                    android:text="Max. power \n2000hp"
+                                    />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:orientation="vertical">
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/outline_speed_24"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/secondary_white"
+                                    android:textSize="12sp"
+                                    android:textAlignment="center"
+                                    android:text="Max. speed \n230kph"
+                                    />
+                            </LinearLayout>
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:orientation="vertical">
+                                <ImageView
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/sharp_directions_car_24"
+                                    />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textColor="@color/secondary_white"
+                                    android:textSize="12sp"
+                                    android:textAlignment="center"
+                                    android:text="0-60mph\n 2.4sec"
+                                    />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <Button
+                                android:id="@+id/btnUpdate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="Directions"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:paddingVertical="7dp"
+                                android:paddingHorizontal="15dp"
+                                android:drawablePadding="10dp"
+                                android:drawableRight="@drawable/baseline_directions"
+                                android:backgroundTint="@null"
+                                android:textColor="@color/secondary_white"
+                                android:background="@drawable/view_analytics_drawable"
+                                android:textAllCaps="false"
+
+                                android:textSize="15sp"/>
+                            <View
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                />
+                            <Button
+                                android:id="@+id/book"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:text="Book Now"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:paddingVertical="7dp"
+                                android:paddingHorizontal="15dp"
+                                android:backgroundTint="@null"
+                                android:background="@drawable/gradient"
+                                android:textAllCaps="false"
+
+                                android:textSize="17sp"/>
+                        </LinearLayout>
+
+
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+            </TextView>
+
+
+
+
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/giveRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Give Rating"
+            android:layout_margin="10dp"
+            android:padding="5dp"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/edittext_background"/>
+
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
