@@ -328,13 +328,163 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 //        TextView button = findViewById(R.id.name);
+//        book.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent  = new Intent(getApplicationContext(),BookSlot.class);
+//                startActivity(intent);
+//            }
+//        });
+//
+//
+//
+//
+//        direction.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                String origin = lati+","+longi; // New York coordinates
+//                String destination = mp.get(tag).getOwner_location().getLatitude()+","+mp.get(tag).getOwner_location().getLongitude(); // Los Angeles coordinates
+//                Uri gmmIntentUri = Uri.parse("http://maps.google.com/maps?saddr=" + origin + "&daddr=" + destination);
+//                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);// Set the package to Google Maps
+//                mapIntent.setPackage("com.google.android.apps.maps");
+//                if (mapIntent.resolveActivity(getPackageManager()) != null) {
+//                    startActivity(mapIntent);
+//                }
+//
+//            }
+//        });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//        firebaseFirestore
+//                .collection("Owner")
+//                .document(allowner.getOwner_email())
+//                .collection("EV_Station")
+//                .get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot snaps) {
+//                        if (snaps == null) return;
+//                        evStations.addAll(snaps.toObjects(EVStation.class));
+//                        int enrgy = 0 ;
+//                        for(int i = 0 ; i < evStations.size();i++)
+//                        {
+//                            enrgy+=evStations.get(i).getEvs_energy();
+//                        }
+//                                remainingEnergy.setText(enrgy+"");
+//
+//
+//
+////                        Toast.makeText(MainActivity.this, ""+evStations.get(0).evs_energy, Toast.LENGTH_SHORT).show();
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
         book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent  = new Intent(getApplicationContext(),BookSlot.class);
-                startActivity(intent);
+
+
+
+
+                firebaseFirestore
+                        .collection("Owner")
+                        .document(allowner.getOwner_email())
+                        .collection("EV_Station")
+                        .get()
+                        .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot snaps) {
+                                if (snaps == null) return;
+                                evStations.addAll(snaps.toObjects(EVStation.class));
+                                int enrgy = 0 ;
+                                for(int i = 0 ; i < evStations.size();i++)
+                                {
+                                    if(evStations.get(i).getEvs_energy()>(allowner.getPrice()*30))
+                                    {
+
+                                        Intent intent  = new Intent(MainActivity.this,BookSlot.class);
+//                                                    Toast.makeText(context, ""+dataholder2.get(position).getPrice(), Toast.LENGTH_SHORT).show();
+                                        intent.putExtra("owner_email",allowner.getOwner_email());
+                                        intent.putExtra("price",allowner.getPrice()+"");
+//                                                    Toast.makeText(context, ""+dataholder2.get(position).getOwner_name(), Toast.LENGTH_SHORT).show();
+                                        intent.putExtra("owner_name",allowner.getOwner_name());
+                                        startActivity(intent);
+
+
+                                    }
+
+
+
+
+
+
+                                }
+//                                            remainingEnergy.setText(enrgy+"");
+
+
+
+//                        Toast.makeText(MainActivity.this, ""+evStations.get(0).evs_energy, Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+
+
+
+
+
+
+
+
+
+
             }
         });
+
+
 
 
 
@@ -343,14 +493,36 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
 
+                Toast.makeText(MainActivity.this, ""+allowner.getLat()+","+allowner.getLang(), Toast.LENGTH_SHORT).show();
+
                 String origin = lati+","+longi; // New York coordinates
-                String destination = mp.get(tag).getOwner_location().getLatitude()+","+mp.get(tag).getOwner_location().getLongitude(); // Los Angeles coordinates
+                String destination = allowner.getOwner_location().getLatitude()+","+allowner.getOwner_location().getLongitude(); // Los Angeles coordinates
+
+
+
+                // Call the method to show directions
+//        MapsHelper.showDirections(this, origin, destination);
+
                 Uri gmmIntentUri = Uri.parse("http://maps.google.com/maps?saddr=" + origin + "&daddr=" + destination);
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);// Set the package to Google Maps
+
+                // Create an Intent with the Uri
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+
+                // Set the package to Google Maps
                 mapIntent.setPackage("com.google.android.apps.maps");
+
+                // Check if there's an app to handle this intent
                 if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                    // Start Google Maps with the intent
                     startActivity(mapIntent);
                 }
+
+
+
+
+
+
+
 
             }
         });
@@ -369,7 +541,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         firebaseFirestore
                 .collection("Owner")
-                .document(allowner.getOwner_email())
+                .document()
                 .collection("EV_Station")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -382,7 +554,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         {
                             enrgy+=evStations.get(i).getEvs_energy();
                         }
-                                remainingEnergy.setText(enrgy+"");
+                        remainingEnergy.setText(enrgy+"");
 
 
 
@@ -394,6 +566,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                         Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+
+
 
 
 

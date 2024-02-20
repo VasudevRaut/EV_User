@@ -25,11 +25,14 @@
         <activity
             android:name=".auth.SplashActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
         </activity>
         <activity
             android:name=".auth.LoginActivity"
@@ -39,7 +42,11 @@
             android:exported="false" />
         <activity
             android:name=".BookSlot"
-            android:exported="true"></activity>
+            android:exported="true">
+
+
+
+        </activity>
         <activity
             android:name=".Profile"
             android:exported="false" />

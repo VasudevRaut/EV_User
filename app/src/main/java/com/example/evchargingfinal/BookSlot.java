@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.evchargingfinal.auth.RegisterActivity;
 import com.example.evchargingfinal.databinding.ActivityBookSlotBinding;
+import com.example.evchargingfinal.profile.ProfileActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,15 +33,21 @@ import org.intellij.lang.annotations.JdkConstants;
 import org.json.JSONObject;
 
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class BookSlot extends AppCompatActivity implements PaymentResultListener {
 
     RecyclerView recyclerView;
+
+    int previous_energy;
+    String owner_name;
+    User user;
 
 
     private List<TimeSlot> itemList;
@@ -52,6 +59,7 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
     List<TimeSlot> data_list;
     private AddSlotAdapter dishAdapter;
     LinearLayoutManager layoutManager;
+    int price;
 
 
 
@@ -66,6 +74,8 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
     private String sharedPreferencesFileTitle = "EV";
+
+    String owner_email;
 
 
 
@@ -85,7 +95,7 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
 
         setContentView(binding.getRoot());
 
-        getOwnerEVStations("chetandagajipatil333@gmail.com");
+        getOwnerEVStations(owner_email);
 
 
 
@@ -103,37 +113,52 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
                 {
 
                     //send update request
-                    List<Integer> slot = new ArrayList<>(Arrays.asList(new Integer[48]));
+                    List<String> slot = new ArrayList<>(Arrays.asList(new String[48]));
                     for(int i = 0; i< 48;i++)
                     {
-                        if(!user_id.equals(i+""))
-                        slot.set(i,0);
+                        if(!data_list.get(i).getStatus().equals(""))
+                        {
+                            slot.set(i,data_list.get(i).getStatus());
+                        }
+                        else {
+                            slot.set(i,"");
+                        }
+//                        if(!user_id.equals(i+""))
+
                     }
                     Map<String, Object> data = new HashMap<>();
-                    slot.set(Integer.parseInt(user_id),1);
+                    slot.set(Integer.parseInt(user_id),firebaseAuth.getCurrentUser().getEmail());
                     data.put("slot",slot);
 //                    Toast.makeText(BookSlot.this, ""+selectedItem, Toast.LENGTH_SHORT).show();
 
                     firebaseFirestore
                             .collection("Owner")
-                            .document("chetandagajipatil333@gmail.com")
+                            .document(owner_email)
                             .collection("EV_Station")
                             .document(selectedItem)
                             .update(data)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void unused) {
+                                    startPayment();
+
+//                                    updateEneryDetails(owner_email);
+
 //                                    Toast.makeText(BookSlot.this, "Onsuccess", Toast.LENGTH_SHORT).show();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-//                                    Toast.makeText(BookSlot.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(BookSlot.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
 
-                    startPayment();
+
 //                    storePaymentData("dagajipatil043@gmail.com","Test","12222","7387579912",200,"Vasudv",20);
+                }
+
+                else {
+                    Toast.makeText(BookSlot.this, "Please Select Slot", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -281,7 +306,7 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
                         station = documentSnapshot.toObject(EVStation.class);
 //                        Toast.makeText(BookSlot.this, ""+station.getSlot(), Toast.LENGTH_SHORT).show();
 
-                        String charSN = "1";
+//                        String charSN = "1";
                         String ownerMail = "Vasudev";
                         data_list.clear();
                         for (int i = 0; i < 48; i++) {
@@ -290,10 +315,9 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
                             String startTime = String.format("%02d:%02d", hours, minutes);
                             String endTime = String.format("%02d:%02d", (hours + (i % 2 == 0 ? 0 : 1)) % 24, (minutes + 30) % 60);
 
-                            data_list.add(new TimeSlot(charSN,startTime + " : " + endTime,ownerMail,""+station.getSlot().get(i)));
-//            timeSlotss.add(startTime + " : " + endTime);
+                            data_list.add(new TimeSlot(station.getEvs_energy()+"",startTime + " : " + endTime,price+"",""+station.getSlot().get(i)));
                         }
-                        data_list.add(new TimeSlot(charSN,"startTime" + " : " + "endTime",ownerMail,""+station.getSlot().get(7)));
+//                        data_list.add(new TimeSlot(charSN,"startTime" + " : " + "endTime",ownerMail,""+station.getSlot().get(7)));
 
 
 
@@ -326,6 +350,17 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
     private void init() {
         timeSlots();
 
+        owner_email = getIntent().getStringExtra("owner_email");
+//        price = 30;
+//        Toast.makeText(this, ""+getIntent().getStringExtra("price"), Toast.LENGTH_SHORT).show();
+
+        price = Integer.parseInt(getIntent().getStringExtra("price"));
+
+        owner_name  = getIntent().getStringExtra("owner_name");
+        //
+//        here also get price with this
+//        owner_email = "aditya.kale23@vit.edu";
+
         evStations = new ArrayList<>();
         ListSubStation = new ArrayList<>();
         Listsub = new ArrayList<>();
@@ -338,13 +373,127 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
 
     @Override
     public void onPaymentSuccess(String s) {
-        Toast.makeText(this, "Payment Successful : "+s, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Payment Successful : "+s, Toast.LENGTH_SHORT).show();
+
+//
+        firebaseFirestore
+                .collection("User")
+                .document(firebaseAuth.getCurrentUser().getEmail())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot doc) {
+                        user = doc.toObject(User.class);
+                        Toast.makeText(BookSlot.this, ""+user.getUser_name(), Toast.LENGTH_SHORT).show();
+                        storePaymentData(owner_email,owner_name,s,user.getUser_mobile_number(),price,user.getUser_name(),30);
+
+
+//                        setData();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(ProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
 
 
-            storePaymentData("dagajipatil043@gmail.com","Test",s,"7387579912",200,"",20);
 
 
+            //update the evstation price
+
+
+            updateEneryDetails(owner_email);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    private void updateEneryDetails(String owner_id) {
+
+            setPreviousData();
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+    private void updateData() {
+
+        Map<String, Object> data = new HashMap<>(); //for update
+        data.put("evs_energy" , previous_energy-price*30);
+        firebaseFirestore
+                .collection("Owner")
+                .document(owner_email)
+                .collection("EV_Station")
+                .document(selectedItem)
+                .update(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(UpdateEvStationActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void setPreviousData() {
+
+
+        Toast.makeText(this, "come inside the get privies", Toast.LENGTH_SHORT).show();
+//
+        firebaseFirestore
+                .collection("Owner")
+                .document(owner_email)
+                .collection("EV_Station")
+                .document(selectedItem)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot doc) {
+                        EVStation evs = doc.toObject(EVStation.class);
+//                        Toast.makeText(BookSlot.this, "get null "+ev/s, Toast.LENGTH_SHORT).show();
+                        if (evs == null) return;
+
+                        previous_energy = evs.getEvs_energy();
+                        Toast.makeText(BookSlot.this, ""+previous_energy, Toast.LENGTH_SHORT).show();
+                        updateData();
+
+
+//                        binding.etAvailable.setText(Integer.toString(previous_energy));
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+//                        Toast.makeText(UpdateEvStationActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @Override
@@ -364,7 +513,7 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
             options.put("name", "DigiGrow");
             options.put("description", "Payment for XYZ");
             options.put("currency", "INR");
-            options.put("amount", ""+(200*100)); // Amount in paise
+            options.put("amount", ""+(price*30*100)); // Amount in paise
             options.put("prefill.email", "vasudevraut156@gmail.com");
             options.put("prefill.contact", "7387579912");
 
@@ -381,21 +530,27 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         // Create a reference to the owner's document
-        DocumentReference ownerRef = firebaseFirestore.collection("Owner").document("chetandagajipatil333@gmail.com");
+        DocumentReference ownerRef = firebaseFirestore.collection("Owner").document(owner_email);
 
 
         //payment_id, payment_from_user_id, payment_from_name, payment_to_owner_id, payment_to_name;
         //    int payment_amount, payment_energy_sold;
 
         // Create a map to store the payment data
-        Map<String, Object> paymentData = new HashMap<>();
-        paymentData.put("payment_id",transaction_id);
-        paymentData.put("payment_from_user_id",customer_phone);
-        paymentData.put("payment_from_name",fromname);
-        paymentData.put("payment_to_owner_id",owner_email);
-        paymentData.put("payment_to_name",owner_name);
-        paymentData.put("payment_amount",amount_paid);
-        paymentData.put("payment_energy_sold",esold);
+        LocalDate today = LocalDate.now();
+
+            String es_date = today.toString();
+//        Map<String, Object> paymentData = new HashMap<>();
+//        paymentData.put("payment_id",transaction_id+ UUID.randomUUID().toString());
+//        paymentData.put("payment_from_user_id",customer_phone);
+//        paymentData.put("payment_from_name",fromname);
+//        paymentData.put("payment_to_owner_id",owner_email);
+//        paymentData.put("payment_to_name",owner_name);
+//        paymentData.put("payment_amount",amount_paid);
+//        paymentData.put("payment_energy_sold",esold);
+//        paymentData.put("payment_date",es_date);
+
+
 
 
 //        paymentData.put("customer_phone", customer_phone);
@@ -403,7 +558,7 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
 
         // Add the payment data to Firestore
         ownerRef.collection("Payments").document(transaction_id)
-                .set(paymentData)
+                .set(new Payment(transaction_id+UUID.randomUUID().toString(),firebaseAuth.getCurrentUser().getEmail(),fromname,owner_email,owner_name,es_date,amount_paid,esold))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

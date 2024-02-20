@@ -8,16 +8,16 @@ public class EVStation {
     String evs_id;
     int evs_available, evs_energy, type;
     //    int[] slot = new int[48];
-    List<Integer> slot = new ArrayList<>(Arrays.asList(new Integer[48]));
+    List<String> slot = new ArrayList<>(Arrays.asList(new String[48]));
 
     public EVStation() {
     }
 
-    public EVStation(List<Integer> slot) {
+    public EVStation(List<String> slot) {
         this.slot = slot;
 }
 
-    public EVStation(String evs_id, List<Integer> slot) {
+    public EVStation(String evs_id, List<String> slot) {
         this.evs_id = evs_id;
         this.evs_available = 0;
         this.evs_energy = 0;
@@ -25,7 +25,7 @@ public class EVStation {
         this.slot = slot;
     }
 
-    public EVStation(String evs_id, int evs_available, int evs_energy, int type, List<Integer> slot) {
+    public EVStation(String evs_id, int evs_available, int evs_energy, int type, List<String> slot) {
         this.evs_id = evs_id;
         this.evs_available = evs_available;
         this.evs_energy = evs_energy;
@@ -65,11 +65,11 @@ public class EVStation {
         this.type = type;
     }
 
-    public List<Integer> getSlot() {
+    public List<String> getSlot() {
         return slot;
     }
 
-    public void setSlot(List<Integer> slot) {
+    public void setSlot(List<String> slot) {
         this.slot = slot;
     }
 }

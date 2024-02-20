@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.Toast;
 
 import com.example.evchargingfinal.Dashboard;
 import com.example.evchargingfinal.MainActivity;
@@ -38,6 +39,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void checkLoginStatus() {
+//        Toast.makeText(this, ""+firebaseAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 if (firebaseAuth.getCurrentUser() != null) {

@@ -67,7 +67,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void getUserData(){
         firebaseFirestore
                 .collection("User")
-                .document("dagajipatil043@gmail.com")
+                .document(firebaseAuth.getCurrentUser().getEmail())
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override

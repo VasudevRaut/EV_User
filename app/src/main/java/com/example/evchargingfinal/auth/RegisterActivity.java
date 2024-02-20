@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.evchargingfinal.Dashboard;
 import com.example.evchargingfinal.User;
 import com.example.evchargingfinal.databinding.ActivityRegisterBinding;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -80,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void unused) {
                                         Toast.makeText(RegisterActivity.this, "Data Entered", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(RegisterActivity.this, Dashboard.class));
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override

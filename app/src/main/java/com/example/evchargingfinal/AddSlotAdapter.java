@@ -41,6 +41,7 @@ public class AddSlotAdapter extends RecyclerView.Adapter<AddSlotAdapter.LeadData
 
     int checker = -1;
     int flag = -1;
+    int isuserselected = 0;
 
     private FirebaseAuth firebaseAuth;
     List<EVStation> evStations = new ArrayList<>();
@@ -87,12 +88,23 @@ public class AddSlotAdapter extends RecyclerView.Adapter<AddSlotAdapter.LeadData
 
 
 
-        if(dataholder2.get(position).status.equals("1")) {
-            holder.time.setBackgroundColor(Color.RED);
+        if(dataholder2.get(position).status.equals("")) {
+            int color = Color.parseColor("#D5E4E6");
+
+            holder.time.setBackgroundColor(color);
         }
         else {
 
-            holder.time.setBackgroundResource(R.drawable.edittext_background);
+            if(firebaseAuth.getCurrentUser().getEmail().equals(dataholder2.get(position).getStatus()))
+            {
+                isuserselected = 1;
+                holder.time.setBackgroundColor(Color.GREEN);
+            }
+            else {
+                holder.time.setBackgroundResource(R.drawable.edittext_background);
+            }
+
+
         }
 
 
@@ -104,47 +116,47 @@ public class AddSlotAdapter extends RecyclerView.Adapter<AddSlotAdapter.LeadData
             holder.time.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(checker==-1 && dataholder2.get(position).status.equals("0"))
+
+
+                    if(Integer.parseInt(dataholder2.get(position).getChargeStationN())>(Integer.parseInt(dataholder2.get(position).getUser_mail())*30))
+
                     {
-                    holder.time.setBackgroundColor(Color.GREEN);
-                        SharedPreferences sharedPreferences = context.getSharedPreferences(sharedPreferencesFileTitle, context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        if(checker==-1 && dataholder2.get(position).status.equals("") && isuserselected==0 )
+                        {
+                            holder.time.setBackgroundColor(Color.GREEN);
+                            SharedPreferences sharedPreferences = context.getSharedPreferences(sharedPreferencesFileTitle, context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                        editor.putString("status", position+"");
-                        editor.apply();
+                            editor.putString("status", position+"");
+                            editor.apply();
 
-                        flag = position;
-                        checker = 2;
+                            flag = position;
+                            checker = 2;
+                        }
+                        else if(position==flag)
+                        {
+                            int color = Color.parseColor("#D5E4E6");
+
+                            holder.time.setBackgroundColor(color);
+                            flag = -1;
+                            checker = -1;
+                            SharedPreferences sharedPreferences = context.getSharedPreferences(sharedPreferencesFileTitle, context.MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                            editor.putString("status", "-1");
+                            editor.apply();
+                        }
                     }
-                    else if(position==flag)
-                    {
-                        holder.time.setBackgroundResource(R.drawable.edittext_background);
-                        flag = -1;
-                        checker = -1;
-                        SharedPreferences sharedPreferences = context.getSharedPreferences(sharedPreferencesFileTitle, context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                        editor.putString("status", "-1");
-                        editor.apply();
+                    else {
+                        Toast.makeText(context, "You don't have enough energy..", Toast.LENGTH_SHORT).show();
                     }
+
+
 
 
 
                 }
             });
-
-
-//
-//            holder.time.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    holder.time.setBackgroundColor(Color.RED);
-//
-//
-//
-//                }
-//            });
-
 
 
 

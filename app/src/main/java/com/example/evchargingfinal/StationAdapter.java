@@ -142,13 +142,84 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.LeadData
 
 
 //        TextView button = findViewById(R.id.name);
-                book.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent  = new Intent(context,BookSlot.class);
-                        context.startActivity(intent);
-                    }
-                });
+
+
+
+
+
+
+
+
+
+
+
+                    book.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+
+
+
+                            firebaseFirestore
+                                    .collection("Owner")
+                                    .document(dataholder2.get(position).getOwner_email())
+                                    .collection("EV_Station")
+                                    .get()
+                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onSuccess(QuerySnapshot snaps) {
+                                            if (snaps == null) return;
+                                            evStations.addAll(snaps.toObjects(EVStation.class));
+                                            int enrgy = 0 ;
+                                            for(int i = 0 ; i < evStations.size();i++)
+                                            {
+                                                if(evStations.get(i).getEvs_energy()>(dataholder2.get(position).getPrice()*30))
+                                                {
+
+                                                    Intent intent  = new Intent(context,BookSlot.class);
+//                                                    Toast.makeText(context, ""+dataholder2.get(position).getPrice(), Toast.LENGTH_SHORT).show();
+                                                    intent.putExtra("owner_email",dataholder2.get(position).getOwner_email());
+                                                    intent.putExtra("price",dataholder2.get(position).getPrice()+"");
+//                                                    Toast.makeText(context, ""+dataholder2.get(position).getOwner_name(), Toast.LENGTH_SHORT).show();
+                                                    intent.putExtra("owner_name",dataholder2.get(position).getOwner_name());
+                                                    context.startActivity(intent);
+
+
+                                                }
+
+
+
+
+
+
+                                            }
+//                                            remainingEnergy.setText(enrgy+"");
+
+
+
+//                        Toast.makeText(MainActivity.this, ""+evStations.get(0).evs_energy, Toast.LENGTH_SHORT).show();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+
+
+
+
+
+
+
+
+
+
+                        }
+                    });
+
+
 
 
 
