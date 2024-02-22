@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
@@ -34,6 +35,7 @@ import org.json.JSONObject;
 
 import java.sql.Time;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -49,10 +51,18 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
     String owner_name;
     User user;
 
+    private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore firebaseFirestore;
+    private String history_id, history_time;
+    private int history_energy, history_price;
+    private GeoPoint history_location;
+
 
     private List<TimeSlot> itemList;
     private AdapterView.OnItemClickListener listener;
     private int selectedPosition = RecyclerView.NO_POSITION;
+
+    public static String owd = "";
 
 
     //List<DataDishes> dataholder;
@@ -71,8 +81,7 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
     List<String> ListSubStation,Listsub;
     EVStation station;
     List<Integer> slot = null;
-    private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore firebaseFirestore;
+
     private String sharedPreferencesFileTitle = "EV";
 
     String owner_email;
@@ -149,7 +158,7 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(BookSlot.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(BookSlot.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -308,6 +317,7 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
 
 //                        String charSN = "1";
                         String ownerMail = "Vasudev";
+                        owd = owner_id;
                         data_list.clear();
                         for (int i = 0; i < 48; i++) {
                             int hours = i / 2;
@@ -384,7 +394,7 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
                     @Override
                     public void onSuccess(DocumentSnapshot doc) {
                         user = doc.toObject(User.class);
-                        Toast.makeText(BookSlot.this, ""+user.getUser_name(), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(BookSlot.this, ""+user.getUser_name(), Toast.LENGTH_SHORT).show();
                         storePaymentData(owner_email,owner_name,s,user.getUser_mobile_number(),price,user.getUser_name(),30);
 
 
@@ -409,6 +419,7 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
 
 
 
+            addHistory();
 
 
 
@@ -421,7 +432,40 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
 
 
 
+    }
 
+
+
+
+    private void addHistory(){
+
+        LocalDateTime now = LocalDateTime.now();
+
+        String dateTime = now.toString();
+
+        history_id = UUID.randomUUID().toString();
+        history_energy = 30;
+        history_price = price*30;
+        history_time = dateTime;
+        history_location = new GeoPoint(18.5204,73.8567);
+
+        firebaseFirestore
+                .collection("User")
+                .document(firebaseAuth.getCurrentUser().getEmail())
+                .collection("History")
+                .document(history_id)
+                .set(new History(history_id, history_time, history_energy, history_price, history_location))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+//                        Toast.makeText(BookSlot.this, "History Added", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(BookSlot.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void updateEneryDetails(String owner_id) {
@@ -466,7 +510,7 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
     private void setPreviousData() {
 
 
-        Toast.makeText(this, "come inside the get privies", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "come inside the get privies", Toast.LENGTH_SHORT).show();
 //
         firebaseFirestore
                 .collection("Owner")
@@ -482,7 +526,7 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
                         if (evs == null) return;
 
                         previous_energy = evs.getEvs_energy();
-                        Toast.makeText(BookSlot.this, ""+previous_energy, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(BookSlot.this, ""+previous_energy, Toast.LENGTH_SHORT).show();
                         updateData();
 
 
@@ -498,7 +542,7 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
 
     @Override
     public void onPaymentError(int i, String s) {
-        Toast.makeText(this, "Error : "+s , Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Error : "+s , Toast.LENGTH_SHORT).show();
 
 
 
@@ -572,7 +616,7 @@ public class BookSlot extends AppCompatActivity implements PaymentResultListener
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         // Failed to add data
-                        Toast.makeText(BookSlot.this, "Fail to add", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(BookSlot.this, "Fail to add", Toast.LENGTH_SHORT).show();
                         Log.e("FirestoreHelper", "Error adding payment data: " + e.getMessage());
                     }
                 });

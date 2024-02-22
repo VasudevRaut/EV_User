@@ -3,16 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="10dp"
+    android:background="@drawable/edittext_background"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginBottom="5dp"
+    android:layout_marginBottom="10dp"
 
     >
     <LinearLayout
         android:id="@+id/card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:background="@drawable/station_light_bg"
+        android:background="@drawable/edittext_background"
         android:orientation="vertical">
 
         <LinearLayout
@@ -85,6 +85,7 @@
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="chip"
@@ -97,6 +98,7 @@
                     android:textColor="@color/cl_black"
                     />
                 <TextView
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="available"
@@ -109,6 +111,7 @@
                     android:textColor="@color/cl_black"
                     />
                 <TextView
+                    android:id="@+id/types"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="fast charging"

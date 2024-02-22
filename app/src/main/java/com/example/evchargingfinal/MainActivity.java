@@ -236,7 +236,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                             map.addCircle(new CircleOptions()
                                     .center(latLng2)
-                                    .radius(10000) // Radius in meters
+                                    .radius(50000) // Radius in meters
                                     .strokeWidth(2)
                                     .strokeColor(Color.BLUE)
                                     .fillColor(Color.argb(20, 0, 0, 20)));
@@ -302,6 +302,12 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 //
         TextView stationname = bottomSheetView.findViewById(R.id.stationname);
         TextView price,remainingEnergy,address;
+
+
+        TextView avg = bottomSheetView.findViewById(R.id.avgr);
+        avg.setText(allowner.getAvg_rating()+"");
+
+
 //        Toast.makeText(this, ""+allowner.getPrice(), Toast.LENGTH_SHORT).show();
         price = bottomSheetView.findViewById(R.id.price);
         remainingEnergy = bottomSheetView.findViewById(R.id.remainingenergy);
@@ -493,7 +499,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(MainActivity.this, ""+allowner.getLat()+","+allowner.getLang(), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, ""+allowner.getLat()+","+allowner.getLang(), Toast.LENGTH_SHORT).show();
 
                 String origin = lati+","+longi; // New York coordinates
                 String destination = allowner.getOwner_location().getLatitude()+","+allowner.getOwner_location().getLongitude(); // Los Angeles coordinates

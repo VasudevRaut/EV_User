@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/layout_background"
+    android:background="@color/cl_black"
     android:orientation="vertical"
+    android:padding="0dp"
     tools:context=".BookSlot">
 
     <androidx.core.widget.NestedScrollView

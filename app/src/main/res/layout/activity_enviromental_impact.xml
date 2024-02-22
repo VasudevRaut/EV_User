@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_bold"
-        android:text="Lorem Ipto make a type specimen book. It has survived not only five centuries, but also the leap into e. It was popularised"
+        android:text="Join our Saving Environment Activity and earn points while making a positive impact!"
         android:textAlignment="center"
         android:textColor="@color/cl_green"
         android:textSize="15dp" />
@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_medium"
-            android:text="Saved - "
+            android:text="Saved Oil - "
             android:textColor="@color/white"
             android:textSize="17dp" />
 
@@ -143,17 +143,10 @@
         android:textSize="17dp" />
 
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/llData"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-
-    </androidx.core.widget.NestedScrollView>
+<androidx.recyclerview.widget.RecyclerView
+    android:id="@+id/rvData"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
 
 
 </LinearLayout>

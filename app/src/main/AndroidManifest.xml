@@ -17,6 +17,16 @@
         android:theme="@style/Base.Theme.EvChargingFinal"
         tools:targetApi="31">
         <activity
+            android:name=".GetAllHistoryActivity"
+            android:exported="true" >
+
+
+
+        </activity>
+        <activity
+            android:name=".ChatBot"
+            android:exported="false" />
+        <activity
             android:name=".Dashboard"
             android:exported="false" />
         <activity
@@ -25,14 +35,16 @@
         <activity
             android:name=".auth.SplashActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="rEMOVE" />
 
-
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".auth.LoginActivity"
@@ -42,20 +54,16 @@
             android:exported="false" />
         <activity
             android:name=".BookSlot"
-            android:exported="true">
-
-
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".Profile"
             android:exported="false" />
         <activity
             android:name=".savingEnvironment"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".ALLEVList"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".StationInfo"
             android:exported="true" />
@@ -64,20 +72,40 @@
             android:exported="true" />
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
-
+            android:exported="true" />
         <activity
             android:name=".rating.GiveRatingActivity"
             android:exported="false" />
-
         <activity
             android:name=".envo_impact.EnviromentalImpactActivity"
             android:exported="false" />
-
         <activity
             android:name=".profile.ProfileActivity"
             android:exported="false" />
 
+        <service
+            android:name=".UserNotification.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".UserNotification.MyBootReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name=".UserNotification.MyNotificationReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.crm_project.NOTIFICATION_RECEIVED" />
+            </intent-filter>
+        </receiver>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -183,7 +183,7 @@ public class getcurrentLocation extends AppCompatActivity {
     }
 
     private void getCurrentLocation() {
-        Toast.makeText(this, "getcurrentLocation", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "getcurrentLocation", Toast.LENGTH_SHORT).show();
         progressBar.setVisibility(View.VISIBLE);
         LocationRequest locationRequest = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
@@ -213,7 +213,7 @@ public class getcurrentLocation extends AppCompatActivity {
                         super.onLocationResult(locationResult);
                         LocationServices.getFusedLocationProviderClient(getApplicationContext())
                                 .removeLocationUpdates(this);
-                        Toast.makeText(getcurrentLocation.this, "when set locatin", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getcurrentLocation.this, "when set locatin", Toast.LENGTH_SHORT).show();
                         if (locationResult != null && locationResult.getLocations().size() > 0) {
                             int latestlocIndex = locationResult.getLocations().size() - 1;
                             double lati = locationResult.getLocations().get(latestlocIndex).getLatitude();
@@ -252,7 +252,7 @@ public class getcurrentLocation extends AppCompatActivity {
                 country.setText(resultData.getString(Constants.COUNTRY));
                 postcode.setText(resultData.getString(Constants.POST_CODE));
             } else {
-                Toast.makeText(getcurrentLocation.this, resultData.getString(Constants.RESULT_DATA_KEY), Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getcurrentLocation.this, resultData.getString(Constants.RESULT_DATA_KEY), Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -261,7 +261,7 @@ public class getcurrentLocation extends AppCompatActivity {
     }
 
     private void fetchaddressfromlocation(Location location) {
-        Toast.makeText(this, "fetcaddressfromlocation", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "fetcaddressfromlocation", Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(this, FetchAddressIntentServices.class);
         intent.putExtra(Constants.RECEVIER, resultReceiver);

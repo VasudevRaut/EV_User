@@ -75,13 +75,14 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.LeadData
 
 
 
-
+//            holder.avg.setText(dataholder2.get(position).getAvg_rating()+"");
             holder.stationname.setText(dataholder2.get(position).getEv_station_name());
             holder.address.setText(getAddress(dataholder2.get(position).getOwner_location().getLatitude(),dataholder2.get(position).getOwner_location().getLongitude()));
 
 
+//        holder.tvType.setText("Type " + dataholder2.get(position).getType());
 
-
+//            holder.types.setText("Type " + dataholder2.get(position).getType());
 
 
 
@@ -112,6 +113,13 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.LeadData
                 remainingEnergy = bottomSheetView.findViewById(R.id.remainingenergy);
                 address = bottomSheetView.findViewById(R.id.address);
                 price.setText(dataholder2.get(position).getPrice()+"");
+
+                TextView avg = bottomSheetView.findViewById(R.id.avgr);
+
+                            avg.setText(dataholder2.get(position).getAvg_rating()+"");
+
+
+
 
                 address.setText(getAddress(dataholder2.get(position).getOwner_location().getLatitude(),dataholder2.get(position).getOwner_location().getLongitude()));
                 stationname.setText(dataholder2.get(position).getEv_station_name());
@@ -158,7 +166,7 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.LeadData
                         public void onClick(View v) {
 
 
-
+//                            Toast.makeText(context, "Done", Toast.LENGTH_SHORT).show();
 
                             firebaseFirestore
                                     .collection("Owner")
@@ -370,6 +378,8 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.LeadData
         LinearLayout card;
 
         LinearLayout bottomsheet;
+        TextView types;
+        TextView avg;
         public LeadData(@NonNull View itemView)
         {
             super(itemView);
@@ -377,6 +387,8 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.LeadData
             card = itemView.findViewById(R.id.card);
             stationname = itemView.findViewById(R.id.station_name);
             address = itemView.findViewById(R.id.distance);
+            types = itemView.findViewById(R.id.types);
+//            avg = itemView.findViewById(R.id.avgr);
 
         }
     }

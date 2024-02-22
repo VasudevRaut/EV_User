@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -42,6 +43,7 @@ public class AddSlotAdapter extends RecyclerView.Adapter<AddSlotAdapter.LeadData
     int checker = -1;
     int flag = -1;
     int isuserselected = 0;
+    Notification notification;
 
     private FirebaseAuth firebaseAuth;
     List<EVStation> evStations = new ArrayList<>();
@@ -148,7 +150,21 @@ public class AddSlotAdapter extends RecyclerView.Adapter<AddSlotAdapter.LeadData
                         }
                     }
                     else {
-                        Toast.makeText(context, "You don't have enough energy..", Toast.LENGTH_SHORT).show();
+
+
+
+
+
+                        getOwnerNotificationDetails();
+
+
+
+
+
+
+
+
+                        Toast.makeText(context, "Station don'y have enough energy..", Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -207,48 +223,49 @@ public class AddSlotAdapter extends RecyclerView.Adapter<AddSlotAdapter.LeadData
     }
 
 
-//    public void showBottomSheetDialog(String tag)
-//    {
-//
-//        final BottomSheetDialog bottomSheetDialog1 = new BottomSheetDialog(
-//                context,R.style.BottomSheetDialogTheme
-//        );
-//
-//
-//        View bottomSheetView = LayoutInflater.from(context)
-//                .inflate(
-//                        R.layout.layout_bottom_sheet, (LinearLayout)findViewById(R.id.bottomsheetcontainer)
-//                );
-////        Owner allowner = mp.get(tag);
-//
-//
-////
-//        TextView stationname = bottomSheetView.findViewById(R.id.stationname);
-//        TextView price,remainingEnergy,address;
-////        Toast.makeText(this, ""+allowner.getPrice(), Toast.LENGTH_SHORT).show();
-//        price = bottomSheetView.findViewById(R.id.price);
-//        remainingEnergy = bottomSheetView.findViewById(R.id.remainingenergy);
-//        address = bottomSheetView.findViewById(R.id.address);
-////        Toast.makeText(this, ""+ Integer.toHexString(System.identityHashCode(allowner.getOwner_location())), Toast.LENGTH_SHORT).show();
-////        price.setText(allowner.getPrice()+"");
-////        remainingEnergy.setText(allowner.get);
-////        address.setText(getAddress());
-////        stationname.setText(allowner.getOwner_name());
-//
-//
-//
-//
-//
-//        Button direction= bottomSheetView.findViewById(R.id.btnUpdate);
-//        Button book = bottomSheetView.findViewById(R.id.book);
-//
-//
-//
-//
-//        bottomSheetDialog1.setContentView(bottomSheetView);
-//        bottomSheetDialog1.show();
-//    }
+    private void getOwnerNotificationDetails(){ //get owner details
 
+
+        firebaseFirestore
+                .collection("Notification")
+                .document(firebaseAuth.getCurrentUser().getEmail())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot doc) {
+                        notification = doc.toObject(Notification.class);
+                        addUserNotify();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+
+
+
+    private void addUserNotify(){ //add user
+        firebaseFirestore
+                .collection("Owner")
+                .document(BookSlot.owd)//owner_email
+                .collection("Notify")
+                .document(notification.getNoti_email())
+                .set(notification)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Toast.makeText(context, "You Will Get Notified when Station will be available", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 
 
 

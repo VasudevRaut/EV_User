@@ -16,13 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 
-public class EnvTrackingAdapter extends RecyclerView.Adapter<EnvTrackingAdapter.LeadData>{
+public class EnvTrackingAdapter extends RecyclerView.Adapter<EnvTrackingAdapter.LeadData> {
 
     List<User> dataholder2;
 
     Context context;
+
     public EnvTrackingAdapter(List<User> dataholder2, Context context) {
-        Toast.makeText(context, "Call here"+dataholder2.size(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "Call here" + dataholder2.size(), Toast.LENGTH_SHORT).show();
         this.dataholder2 = dataholder2;
         this.context = context;
 
@@ -37,7 +38,7 @@ public class EnvTrackingAdapter extends RecyclerView.Adapter<EnvTrackingAdapter.
     @NonNull
     @Override
     public LeadData onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.env_track_card,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.env_track_card, parent, false);
         return new LeadData(view);
     }
 
@@ -45,7 +46,8 @@ public class EnvTrackingAdapter extends RecyclerView.Adapter<EnvTrackingAdapter.
     public void onBindViewHolder(@NonNull LeadData holder, int position) {
 
 
-
+        holder.name.setText(dataholder2.get(position).getUser_name());
+        holder.budget.setText(Integer.toString(dataholder2.get(position).getPoints()));
 
 
     }
@@ -62,22 +64,23 @@ public class EnvTrackingAdapter extends RecyclerView.Adapter<EnvTrackingAdapter.
     }
 
 
-    class LeadData extends RecyclerView.ViewHolder
-    {
-        TextView name,budget,prefer,property;
+    class LeadData extends RecyclerView.ViewHolder {
+        TextView name, budget, prefer, property;
         CardView fullLead;
         ImageView platform;
-        TextView lead_date,status,lead_type;
-        public LeadData(@NonNull View itemView)
-        {
+        TextView lead_date, status, lead_type;
+
+        public LeadData(@NonNull View itemView) {
             super(itemView);
 
+            name = itemView.findViewById(R.id.name);
+            budget = itemView.findViewById(R.id.pts);
         }
     }
+
     public boolean isNumeric(String str) {
         return str.matches("\\d+");
     }
-
 
 
 }

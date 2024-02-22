@@ -1,120 +1,389 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="16dp"
-    android:background="@drawable/edittext_background"
-    tools:context=".MainActivity">
+    android:padding="20dp"
+    android:background="@color/cl_black"
 
-    <GridLayout
-        android:id="@+id/gridLayout"
+    tools:context=".Dashboard">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:columnCount="2"
-        android:rowCount="3"
-        android:alignmentMode="alignMargins"
-        android:columnOrderPreserved="false"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp">
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
 
-        <!-- Card 1 -->
-        <androidx.cardview.widget.CardView
-            android:backgroundTint="@color/white"
-            android:id="@+id/btnRating"
-            android:layout_width="0dp"
+        android:layout_marginTop="10dp"
+
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:layout_margin="8dp"
-            android:background="@color/white"
-            android:elevation="4dp">
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="0dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="MySpace"
+            android:textColor="@color/cl_green"
+            android:textSize="30sp" />
 
-            <TextView
-                android:textColor="@color/black"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="@font/poppins_bold"
+            android:text="Your personalized gateway to everything you need"
+            android:textColor="@color/cl_faint_green"
+            android:textSize="10sp" />
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Find Near Station"
-                android:textSize="16sp"
-                android:padding="8dp"
-                android:gravity="center"
-                android:layout_gravity="center"/>
+                android:orientation="vertical">
+                <!-- Card 1 -->
+                <LinearLayout
+                    android:id="@+id/btnRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/edittext_background"
 
-        </androidx.cardview.widget.CardView>
+                    app:cardCornerRadius="15dp">
 
-        <!-- Card 3 -->
-        <androidx.cardview.widget.CardView
-            android:backgroundTint="@color/white"
-            android:id="@+id/btnEnvImpact"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:layout_margin="8dp"
-            android:background="#F5F5F5"
-            android:elevation="4dp">
+                    <LinearLayout
 
-            <TextView
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ENV Empact"
-                android:textSize="16sp"
-                android:padding="8dp"
-                android:gravity="center"
-                android:layout_gravity="center"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
 
-        </androidx.cardview.widget.CardView>
+                        <!-- Image -->
+                        <com.google.android.material.imageview.ShapeableImageView
 
-        <!-- Card 4 -->
-        <androidx.cardview.widget.CardView
-            android:backgroundTint="@color/white"
-            android:id="@+id/btnProfile"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:layout_margin="8dp"
-            android:background="#F5F5F5"
-            android:elevation="4dp">
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/white"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/searching_location"
+                            app:shapeAppearanceOverlay="@style/ImageView.SmallRound" />
 
-            <TextView
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Profile"
-                android:textSize="16sp"
-                android:padding="8dp"
-                android:gravity="center"
-                android:layout_gravity="center"/>
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
 
-        </androidx.cardview.widget.CardView>
+                            android:layout_weight="1"
+                            android:orientation="vertical">
 
-        <!-- Card 5 -->
-        <androidx.cardview.widget.CardView
-            android:backgroundTint="@color/white"
-            android:id="@+id/btnViewStations"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:layout_rowWeight="1"
-            android:layout_margin="8dp"
-            android:background="#F5F5F5"
-            android:elevation="4dp">
+                            <!-- Title -->
+                            <TextView
 
-            <TextView
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="View Station"
-                android:textSize="16sp"
-                android:padding="8dp"
-                android:gravity="center"
-                android:layout_gravity="center"/>
+                                android:layout_width="300dp"
+                                android:layout_height="wrap_content"
 
-        </androidx.cardview.widget.CardView>
+                                android:text="Find Near Station "
+                                android:textColor="@color/secondary_white"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <!-- Subtitle -->
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:text="Locate nearby charging stations effortlessly"
+                                android:textColor="@android:color/darker_gray"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
 
 
-    </GridLayout>
+                <!-- Card 1 -->
+                <LinearLayout
+                    android:id="@+id/btnEnvImpact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/edittext_background"
+
+                    app:cardCornerRadius="15dp">
+
+                    <LinearLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <!-- Image -->
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/white"
+
+                            android:scaleType="centerInside"
+
+                            android:src="@drawable/woman_holding_a_heart"
+                            app:shapeAppearanceOverlay="@style/ImageView.SmallRound" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <!-- Title -->
+                            <TextView
+
+                                android:layout_width="300dp"
+                                android:layout_height="wrap_content"
+
+                                android:text="Enviromental Empact"
+                                android:textColor="@color/secondary_white"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <!-- Subtitle -->
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:text="Locate nearby charging stations effortlessly"
+                                android:textColor="@android:color/darker_gray"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!-- Card 1 -->
+                <LinearLayout
+                    android:id="@+id/btnViewStations"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/edittext_background"
+
+                    app:cardCornerRadius="15dp">
+
+                    <LinearLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <!-- Image -->
+                        <com.google.android.material.imageview.ShapeableImageView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:background="@color/white"
+                            android:scaleType="centerInside"
+
+                            android:src="@drawable/looking_at_the_map"
+                            app:shapeAppearanceOverlay="@style/ImageView.SmallRound" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <!-- Title -->
+                            <TextView
+
+                                android:layout_width="300dp"
+                                android:layout_height="wrap_content"
+
+                                android:text="Available Station"
+                                android:textColor="@color/secondary_white"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <!-- Subtitle -->
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:text="Discover charging stations near you"
+                                android:textColor="@android:color/darker_gray"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!-- Card 1 -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:id="@+id/btnProfile"
+                    android:background="@drawable/edittext_background"
+
+                    app:cardCornerRadius="15dp">
+
+                    <LinearLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <!-- Image -->
+                        <com.google.android.material.imageview.ShapeableImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/white"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/man_with_short_hair_avatar"
+                            app:shapeAppearanceOverlay="@style/ImageView.SmallRound" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <!-- Title -->
+                            <TextView
+
+                                android:layout_width="300dp"
+                                android:layout_height="wrap_content"
+
+                                android:text="Your Profile "
+                                android:textColor="@color/secondary_white"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <!-- Subtitle -->
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:text="Manage your personal details and preferences"
+                                android:textColor="@android:color/darker_gray"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/Historys"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/edittext_background"
+
+                    app:cardCornerRadius="15dp">
+
+                    <LinearLayout
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <!-- Image -->
+                        <com.google.android.material.imageview.ShapeableImageView
+
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/white"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/paper_documentss"
+                            app:shapeAppearanceOverlay="@style/ImageView.SmallRound" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <!-- Title -->
+                            <TextView
+
+                                android:layout_width="300dp"
+                                android:layout_height="wrap_content"
+
+                                android:text="History"
+                                android:textColor="@color/secondary_white"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <!-- Subtitle -->
+                            <TextView
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:text="Explore your journey in electric vehicle charging"
+                                android:textColor="@android:color/darker_gray"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/chatbot"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="20dp"
+        android:onClick="ChatBot"
+        android:orientation="vertical">
+
+        <com.airbnb.lottie.LottieAnimationView
+
+            android:id="@+id/animationView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_fileName="aibot.json" />
+
+    </LinearLayout>
+
+
 </RelativeLayout>

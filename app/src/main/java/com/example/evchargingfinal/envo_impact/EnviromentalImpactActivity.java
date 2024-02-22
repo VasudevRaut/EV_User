@@ -2,6 +2,7 @@ package com.example.evchargingfinal.envo_impact;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.evchargingfinal.EnvTrackingAdapter;
 import com.example.evchargingfinal.R;
 import com.example.evchargingfinal.User;
 import com.example.evchargingfinal.databinding.ActivityEnviromentalImpactBinding;
@@ -33,6 +35,9 @@ public class EnviromentalImpactActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseFirestore firebaseFirestore;
     private ActivityEnviromentalImpactBinding binding;
+    private EnvTrackingAdapter dishAdapter;
+    private LinearLayoutManager layoutManager;
+    private List<User> ratings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,22 +54,6 @@ public class EnviromentalImpactActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
     }
 
-    private void addLearderboard() {
-
-        for (User curr : users) {
-//            Log.d("TAG", "addLearderboard: "+curr.getUser_name());
-            View view = getLayoutInflater().inflate(R.layout.leaderboard_card, null, false);
-
-//            TextView tvName = view.findViewById(R.id.tvLeadName);
-//            TextView tvPoints = view.findViewById(R.id.tvLeadPoints);
-//
-//            tvName.setText(curr.getUser_name());
-//            tvPoints.setText(curr.getPoints());
-//
-            binding.llData.addView(view);
-        }
-
-    }
 
     private void sortUsers() {
         Collections.sort(users, new Comparator<User>() {
@@ -85,7 +74,11 @@ public class EnviromentalImpactActivity extends AppCompatActivity {
                     public void onSuccess(QuerySnapshot snaps) {
                         users.addAll(snaps.toObjects(User.class));
                         sortUsers();
-                        addLearderboard();
+
+                        dishAdapter = new EnvTrackingAdapter(users, EnviromentalImpactActivity.this);
+                        binding.rvData.setAdapter(dishAdapter);
+//                        evStations.addAll(snaps.getDocuments());
+//                        addLearderboard();
                     }
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -137,6 +130,11 @@ public class EnviromentalImpactActivity extends AppCompatActivity {
 
     private void init() {
         users = new ArrayList<>();
+
+        layoutManager = new LinearLayoutManager(this);
+//        layoutManager.setOrientation(RecyclerView.VERTICAL);
+        binding.rvData.setLayoutManager(layoutManager);
+//        ratings = new ArrayList<>();
 
         points = energy = petrol_disel = 0;
 
